@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SearchQTPD</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Search<span class="highlight">QTPD</span></h1>
+
+    <form action="/search">
+      <input type="text" id="search" placeholder="Dive into web..." />
+      <button type="submit">🔍 Search!</button>
+    </form>
+        <div class="updates">
+      <p>✨ Absolute UI Redesign</p>
+      <p>🐞 General Bug Fix</p>
+      <p>⚡ Increase Search Speed</p>
+    </div>
+  </div>
+
+  <footer>
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="version.html">Latest Version</a></li>
+      <li><a href="config.html">Configuration</a></li>
+    </ul>
+  </footer>
+  <script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const query = document.getElementById("search").value;
+    if (query.trim()) {
+      window.location.href = `results.html?q=${encodeURIComponent(query)}`;
+    }
+  });
+</script>
+
+</body>
+</html>
