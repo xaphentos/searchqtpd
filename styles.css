@@ -1,0 +1,98 @@
+:root {
+  --bg: #111;
+  --text: #fff;
+  --highlight: #a855f7;
+  --box: #000;
+  --link: #aaa;
+  --link-hover: #fff;
+}
+
+.light-theme {
+  --bg: #f5f5f5;
+  --text: #111;
+  --highlight: #2563eb;
+  --box: #fff;
+  --link: #333;
+  --link-hover: #000;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  text-align: center;
+}
+
+.container {
+  padding: 100px 20px 40px;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+.highlight {
+  color: var(--highlight);
+}
+
+form {
+  margin-top: 30px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 250px;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.update-box {
+  background: var(--box);
+  display: inline-block;
+  padding: 15px 30px;
+  margin-top: 40px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.update-box p {
+  margin: 10px 0;
+}
+
+footer {
+  background: var(--box);
+  padding: 15px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer li {
+  display: inline;
+  margin: 0 15px;
+}
+
+footer a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--link-hover);
+}
+
