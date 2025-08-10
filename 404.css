@@ -1,0 +1,45 @@
+/* 404 page specific styles */
+
+.container h1 {
+  font-size: 6em;
+  font-weight: 900;
+  margin-bottom: 10px;
+  user-select: none;
+  color: var(--highlight);
+  text-shadow: 0 0 15px var(--highlight);
+}
+
+.container h2 {
+  font-weight: 600;
+  margin-bottom: 25px;
+  font-size: 1.8em;
+  user-select: none;
+  color: var(--text);
+}
+
+.container p {
+  font-size: 1.1em;
+  color: #ccc;
+  max-width: 400px;
+  margin: 0 auto 40px;
+  line-height: 1.5;
+}
+
+.back-home {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--highlight);
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 20px;
+  border: 2px solid var(--highlight);
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 20px rgba(168, 85, 247, 0.3);
+  user-select: none;
+}
+
+.back-home:hover {
+  background-color: var(--highlight);
+  color: var(--text);
+  box-shadow: 0 12px 30px rgba(168, 85, 247, 0.6);
+}
