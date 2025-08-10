@@ -1,32 +1,72 @@
+:root {
+  --bg: #111;
+  --text: #eee;
+  --highlight: #a855f7;
+  --box: #1a1a1a;
+  --shadow: rgba(168, 85, 247, 0.3);
+  --footer-bg: #1a1a1a;
+  --footer-link: #aaa;
+  --footer-link-hover: #fff;
+}
+
 body {
   margin: 0;
-  font-family: sans-serif;
-  background: #111;
-  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  padding-bottom: 70px; /* to avoid footer overlap */
 }
 
 .container {
-  max-width: 800px;
-  margin: 50px auto;
-  padding: 20px;
+  max-width: 720px;
+  margin: 80px auto 40px;
+  padding: 0 20px;
 }
 
 h1 {
-  color: #a855f7;
-  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 2.6em;
+  margin-bottom: 36px;
+  user-select: none;
 }
 
 .changelog article {
-  background: #1c1c1c;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  background: var(--box);
+  padding: 28px 32px;
+  border-radius: 18px;
+  box-shadow: 0 10px 28px var(--shadow);
+  text-align: left;
+  user-select: text;
+  line-height: 1.5;
+}
+
+.changelog h2 {
+  color: var(--highlight);
+  font-size: 1.8em;
+  margin-top: 24px;
+  margin-bottom: 14px;
+  user-select: none;
+}
+
+.changelog p {
+  margin: 8px 0 14px;
+  color: #ccc;
+  font-size: 1.1em;
+  white-space: pre-line;
 }
 
 footer {
+  background: var(--footer-bg);
+  padding: 15px 0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
   text-align: center;
-  background: #000;
-  padding: 15px;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.9);
+  user-select: none;
 }
 
 footer ul {
@@ -36,11 +76,21 @@ footer ul {
 }
 
 footer li {
-  display: inline;
-  margin: 0 15px;
+  display: inline-block;
+  margin: 0 18px;
+  font-weight: 500;
 }
 
 footer a {
-  color: #aaa;
+  color: var(--footer-link);
   text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 12px;
+  transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+footer a:hover {
+  color: var(--footer-link-hover);
+  background-color: var(--highlight);
+  box-shadow: 0 4px 20px var(--shadow);
 }
