@@ -78,6 +78,7 @@ input[type="text"]:focus {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+  cursor: pointer;
 }
 
 .updates p {
@@ -120,3 +121,4 @@ footer a:hover {
   background-color: var(--highlight);
   box-shadow: 0 2px 10px var(--shadow);
 }
+
