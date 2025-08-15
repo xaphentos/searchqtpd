@@ -54,7 +54,7 @@ Here’s how SearchQTPD stacks up against popular search engines in average resp
 
 ## 📸 Preview
 
-![preview](screenshoot.png)
+![preview](about.png)
 
 ---
 
