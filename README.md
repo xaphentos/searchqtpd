@@ -62,6 +62,7 @@ Here’s how SearchQTPD stacks up against popular search engines in average resp
 
 Try SearchQTPD and experience how **fast and focused** a search engine can be!
 
+![img](example.png)
 ---
 
 Thank you for choosing SearchQTPD — your shortcut to the data you need. ✨💼
