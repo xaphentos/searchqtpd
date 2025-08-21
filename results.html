@@ -19,7 +19,6 @@
 
   <nav class="tabs">
     <a href="#" class="active">🌐 All</a>
-    <a id="imagesTab" href="images.html" class="unactive">🖼️ Images</a>
     <a href="faq.html">💬 Feedback</a>
   </nav>
 
@@ -535,13 +534,6 @@
     document.getElementById("queryInput").value = q;
     fetchResults(q);
   }
-
-
-const imagesTab = document.getElementById("imagesTab");
-const queryParam = new URLSearchParams(window.location.search).get("q");
-if (queryParam) {
-imagesTab.href = `images.html?q=${encodeURIComponent(queryParam)}`;
-}
 </script>
 </body>
 </html>
