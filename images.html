@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SearchQTPD - Images</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SearchQTPD Images</title>
   <link rel="stylesheet" href="images.css">
   <link rel="icon" type="image/png" href="favicon.ico">
 </head>
 <body>
-
   <header>
-    <a href="index.html" class="brand">Search<span class="highlight">QTPD</span></a>
+    <a href="index.html" class="brand">Search<span class="highlight">QTD</span></a>
     <form id="searchForm">
-      <input type="search" id="queryInput" name="q" placeholder="Search images..." required />
+      <input type="search" id="query" placeholder="Search images..." required>
       <button type="submit">Search</button>
     </form>
   </header>
 
   <nav class="tabs">
-    <a href="results.html?q=">🌐 All</a>
-    <a href="images.html" class="active">🖼️ Images</a>
+    <a href="index.html">🌐 All</a>
+    <a href="#" class="active">🖼️ Images</a>
     <a href="faq.html">💬 Feedback</a>
   </nav>
 
   <main>
-    <section class="results-grid" id="resultsContainer">
-      <!-- Images will be inserted here -->
-    </section>
+    <div class="results" id="results"></div>
   </main>
 
   <footer>
@@ -37,91 +34,47 @@
     </ul>
   </footer>
 
-<script>
-async function fetchImageResults(query) {
-  const container = document.getElementById("resultsContainer");
-  container.innerHTML = "<p>Loading images...</p>";
+  <script>
+    const form = document.getElementById('searchForm');
+    const resultsDiv = document.getElementById('results');
 
-  try {
-    container.innerHTML = "";
-    let found = false;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const query = document.getElementById('query').value.trim();
+      if(!query) return;
 
-    // === 1. DuckDuckGo API ===
-    const ddgRes = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_redirect=1&no_html=1`);
-    const ddgData = await ddgRes.json();
+      resultsDiv.innerHTML = '<p>Loading images...</p>';
 
-    if (ddgData.RelatedTopics) {
-      ddgData.RelatedTopics.forEach(topic => {
-        const iconURL = topic.Icon?.URL;
-        const firstURL = topic.FirstURL;
-        const text = topic.Text;
-        if (iconURL && firstURL && text) {
-          const imgSrc = iconURL.startsWith("http") ? iconURL : `https://duckduckgo.com${iconURL}`;
-          const article = document.createElement("article");
-          article.classList.add("image-card");
-          article.innerHTML = `
-            <a href="${firstURL}" target="_blank" rel="noopener noreferrer">
-              <img src="${imgSrc}" alt="${text}">
-            </a>
-            <p>${text}</p>
-            <small>${new URL(firstURL).hostname}</small>
-          `;
-          container.appendChild(article);
-          found = true;
+      try {
+        // Wikipedia API search for images
+        const url = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=20&prop=pageimages|info&pithumbsize=400&inprop=url`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        const pages = data.query?.pages;
+        if(!pages) {
+          resultsDiv.innerHTML = '<p>No images found.</p>';
+          return;
         }
-      });
-    }
 
-    // === 2. Wikipedia fallback ===
-    if (!found) {
-      const wikiRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=pageimages|pageterms&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=12&pilimit=12&pithumbsize=300`);
-      const wikiData = await wikiRes.json();
-      if (wikiData.query?.pages) {
-        Object.values(wikiData.query.pages).forEach(page => {
-          const thumb = page.thumbnail?.source;
-          if (thumb) {
-            const article = document.createElement("article");
-            article.classList.add("image-card");
-            article.innerHTML = `
-              <a href="https://en.wikipedia.org/?curid=${page.pageid}" target="_blank" rel="noopener noreferrer">
-                <img src="${thumb}" alt="${page.title}">
+        const imagesHTML = Object.values(pages).map(page => {
+          if(!page.thumbnail) return '';
+          return `
+            <article>
+              <a href="${page.fullurl}" target="_blank">
+                <img src="${page.thumbnail.source}" alt="${page.title}">
               </a>
               <p>${page.title}</p>
-              <small>wikipedia.org</small>
-            `;
-            container.appendChild(article);
-            found = true;
-          }
-        });
+            </article>
+          `;
+        }).join('');
+
+        resultsDiv.innerHTML = imagesHTML || '<p>No images found.</p>';
+      } catch(err) {
+        console.error(err);
+        resultsDiv.innerHTML = '<p>Error fetching images. Try again later.</p>';
       }
-    }
-
-    if (!found) {
-      container.innerHTML = "<p>No images found.</p>";
-    }
-
-  } catch (err) {
-    console.error(err);
-    container.innerHTML = "<p>Error fetching images.</p>";
-  }
-}
-
-// === Search form submission ===
-document.getElementById("searchForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const query = document.getElementById("queryInput").value.trim();
-  if (query) {
-    window.location.href = `images.html?q=${encodeURIComponent(query)}`;
-  }
-});
-
-// === Fetch images on page load if query exists ===
-const params = new URLSearchParams(window.location.search);
-const q = params.get("q");
-if (q) {
-  document.getElementById("queryInput").value = q;
-  fetchImageResults(q);
-}
-</script>
+    });
+  </script>
 </body>
 </html>
