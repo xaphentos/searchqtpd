@@ -37,28 +37,26 @@
   <script>
     const form = document.getElementById('searchForm');
     const resultsDiv = document.getElementById('results');
+    const queryInput = document.getElementById('query');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const query = document.getElementById('query').value.trim();
-      if(!query) return;
-
+    // function to fetch and render images
+    async function searchImages(query) {
+      if (!query) return;
       resultsDiv.innerHTML = '<p>Loading images...</p>';
 
       try {
-        // Wikipedia API search for images
         const url = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=20&prop=pageimages|info&pithumbsize=400&inprop=url`;
         const res = await fetch(url);
         const data = await res.json();
 
         const pages = data.query?.pages;
-        if(!pages) {
+        if (!pages) {
           resultsDiv.innerHTML = '<p>No images found.</p>';
           return;
         }
 
         const imagesHTML = Object.values(pages).map(page => {
-          if(!page.thumbnail) return '';
+          if (!page.thumbnail) return '';
           return `
             <article>
               <a href="${page.fullurl}" target="_blank">
@@ -70,11 +68,30 @@
         }).join('');
 
         resultsDiv.innerHTML = imagesHTML || '<p>No images found.</p>';
-      } catch(err) {
+      } catch (err) {
         console.error(err);
         resultsDiv.innerHTML = '<p>Error fetching images. Try again later.</p>';
       }
+    }
+
+    // handle form submission
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = queryInput.value.trim();
+      if (!query) return;
+
+      // update URL with ?q= parameter
+      window.history.pushState({}, '', `?q=${encodeURIComponent(query)}`);
+      searchImages(query);
     });
+
+    // check if URL already has ?q= and auto-search
+    const params = new URLSearchParams(window.location.search);
+    const queryFromURL = params.get("q");
+    if (queryFromURL) {
+      queryInput.value = queryFromURL;
+      searchImages(queryFromURL);
+    }
   </script>
 </body>
 </html>
