@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SearchQTPD - Deals</title>
+  <link rel="stylesheet" href="images.css">
+  <link rel="icon" type="image/png" href="favicon.ico">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="brand">Search<span class="highlight">QTPD</span></a>
+    <form id="searchForm">
+      <input type="search" id="query" placeholder="Search deals..." required>
+      <button type="submit">Search</button>
+    </form>
+  </header>
+
+  <nav class="tabs">
+    <a href="index.html">🌐 All</a>
+    <a href="images.html">🖼️ Images</a>
+    <a href="videos.html">🎬 Videos</a>
+    <a href="#" class="active">🛒 Deals</a>
+    <a href="faq.html">💬 Feedback</a>
+  </nav>
+
+  <main>
+    <div class="results" id="results"></div>
+  </main>
+
+  <footer>
+    <ul>
+      <li><a href="about-project.html">About</a></li>
+      <li><a href="version.html">Latest Version</a></li>
+      <li><a href="index.html">Search</a></li>
+    </ul>
+  </footer>
+
+<script>
+  const form = document.getElementById('searchForm');
+  const resultsDiv = document.getElementById('results');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const query = document.getElementById('query').value.trim();
+    if (!query) return;
+
+    resultsDiv.innerHTML = '<p>Loading deals...</p>';
+
+    const links = [
+      { name: 'Amazon', url: `https://www.amazon.com/s?k=${encodeURIComponent(query)}` },
+      { name: 'eBay', url: `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(query)}` },
+      { name: 'Etsy', url: `https://www.etsy.com/search?q=${encodeURIComponent(query)}` }
+    ];
+
+    const html = links.map(link => `
+      <article>
+        <a href="${link.url}" target="_blank">${link.name}: Search for "${query}"</a>
+        <p>Find deals and products</p>
+        <small>${link.url.split('/')[2]}</small>
+      </article>
+    `).join('');
+
+    resultsDiv.innerHTML = html;
+  });
+
+  // Auto-search if query parameter exists
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get("q");
+  if (q) {
+    document.getElementById("query").value = q;
+    form.dispatchEvent(new Event('submit'));
+  }
+</script>
+</body>
+</html>
