@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SearchQTPD Videos</title>
+  <link rel="stylesheet" href="videos.css" />
+  <link rel="icon" type="image/png" href="favicon.ico">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="brand">Search<span class="highlight">QTPD</span></a>
+    <form id="searchForm">
+      <input type="search" id="query" placeholder="Search videos..." required />
+      <button type="submit">Search</button>
+    </form>
+  </header>
+
+  <nav class="tabs">
+    <a href="index.html">🌐 All</a>
+    <a href="images.html">🖼️ Images</a>
+    <a href="#" class="active">🎥 Videos</a>
+    <a href="faq.html">💬 Feedback</a>
+  </nav>
+
+  <main>
+    <div class="results" id="results">
+      <p>Enter a search query above to find videos.</p>
+    </div>
+  </main>
+
+  <footer>
+    <ul>
+      <li><a href="about-project.html">About</a></li>
+      <li><a href="version.html">Latest Version</a></li>
+      <li><a href="index.html">Search</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    const form = document.getElementById("searchForm");
+    const resultsDiv = document.getElementById("results");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const query = document.getElementById("query").value.trim();
+      if (!query) return;
+      showLinks(query);
+    });
+
+    // Support ?q= from URL
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (q) {
+      document.getElementById("query").value = q;
+      showLinks(q);
+    }
+
+    function showLinks(query) {
+      const odyseeUrl = `https://odysee.com/$/search?q=${encodeURIComponent(query)}`;
+      const youtubeUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+
+      resultsDiv.innerHTML = `
+        <article>
+          <h2>Video Search Links</h2>
+          <p><a href="${odyseeUrl}" target="_blank">🔗 View on Odysee</a></p>
+          <p><a href="${youtubeUrl}" target="_blank">🔗 View on YouTube</a></p>
+        </article>
+      `;
+    }
+  </script>
+</body>
+</html>
