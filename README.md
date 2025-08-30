@@ -46,7 +46,7 @@ Here’s how SearchQTPD stacks up against popular search engines in average resp
 | Bing                  | 250 - 450                  |
 | DuckDuckGo            | 300 - 500                  |
 | Yahoo                 | 350 - 600                  |
-| **SearchQTPD**        | *15ms-100ms*               |
+| **SearchQTPD**        | *15-100*                   |
 
 *Note: Actual speeds depend on your location and network conditions.*
 
